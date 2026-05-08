@@ -16,9 +16,9 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "100000000000000000000040"
-               BuildableName = "EmailApp.app"
-               BlueprintName = "EmailApp"
-               ReferencedContainer = "container:EmailApp.xcodeproj">
+               BuildableName = "Courier.app"
+               BlueprintName = "Courier"
+               ReferencedContainer = "container:Courier.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -45,9 +45,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "100000000000000000000040"
-            BuildableName = "EmailApp.app"
-            BlueprintName = "EmailApp"
-            ReferencedContainer = "container:EmailApp.xcodeproj">
+            BuildableName = "Courier.app"
+            BlueprintName = "Courier"
+            ReferencedContainer = "container:Courier.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </LaunchAction>
@@ -62,9 +62,9 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "100000000000000000000040"
-            BuildableName = "EmailApp.app"
-            BlueprintName = "EmailApp"
-            ReferencedContainer = "container:EmailApp.xcodeproj">
+            BuildableName = "Courier.app"
+            BlueprintName = "Courier"
+            ReferencedContainer = "container:Courier.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
    </ProfileAction>

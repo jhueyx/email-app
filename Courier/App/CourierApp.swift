@@ -1,7 +1,7 @@
 import SwiftUI
 
 @main
-struct EmailAppApp: App {
+struct CourierApp: App {
     var body: some Scene {
         WindowGroup {
             RootView()

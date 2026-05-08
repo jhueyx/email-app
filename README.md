@@ -13,14 +13,14 @@ Courier is a native SwiftUI email client prototype for iPhone. The installed iOS
 
 ## Run
 
-Open `EmailApp.xcodeproj` in Xcode and run the `EmailApp` scheme on an iPhone simulator.
+Open `Courier.xcodeproj` in Xcode and run the `Courier` scheme on an iPhone simulator.
 
 ## Build From Terminal
 
 ```bash
 xcodebuild \
-  -project EmailApp.xcodeproj \
-  -scheme EmailApp \
+  -project Courier.xcodeproj \
+  -scheme Courier \
   -destination 'generic/platform=iOS Simulator' \
   build
 ```
