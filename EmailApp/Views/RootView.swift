@@ -40,64 +40,70 @@ struct RootView: View {
     }
 
     var body: some View {
-        NavigationStack {
-            ZStack(alignment: .bottomTrailing) {
-                InboxView(
-                    folder: folder,
-                    selectedCategory: $selectedCategory,
-                    emails: visibleEmails,
-                    unreadCount: unreadCount,
-                    statuses: statuses,
-                    onOpen: { selectedEmail = $0 },
-                    onArchive: { update($0.id) { $0.archived = true } },
-                    onDone: { update($0.id) { $0.done = true } },
-                    onShowFolders: { showingFolders = true },
-                    onShowSearch: { showingSearch = true }
-                )
+        ZStack {
+            Color.black.ignoresSafeArea()
 
-                Button {
-                    showingCompose = true
-                } label: {
-                    Image(systemName: "square.and.pencil")
-                        .font(.system(size: 22, weight: .semibold))
-                        .foregroundStyle(.black)
-                        .frame(width: 58, height: 58)
-                        .background(.white)
-                        .clipShape(Circle())
-                        .shadow(color: .black.opacity(0.25), radius: 18, y: 8)
+            NavigationStack {
+                ZStack(alignment: .bottomTrailing) {
+                    InboxView(
+                        folder: folder,
+                        selectedCategory: $selectedCategory,
+                        emails: visibleEmails,
+                        unreadCount: unreadCount,
+                        statuses: statuses,
+                        onOpen: { selectedEmail = $0 },
+                        onArchive: { update($0.id) { $0.archived = true } },
+                        onDone: { update($0.id) { $0.done = true } },
+                        onShowFolders: { showingFolders = true },
+                        onShowSearch: { showingSearch = true }
+                    )
+
+                    Button {
+                        showingCompose = true
+                    } label: {
+                        Image(systemName: "square.and.pencil")
+                            .font(.system(size: 22, weight: .semibold))
+                            .foregroundStyle(.black)
+                            .frame(width: 58, height: 58)
+                            .background(.white)
+                            .clipShape(Circle())
+                            .shadow(color: .black.opacity(0.25), radius: 18, y: 8)
+                    }
+                    .padding(.trailing, 20)
+                    .padding(.bottom, 20)
                 }
-                .padding(.trailing, 20)
-                .padding(.bottom, 20)
+                .background(Color.black.ignoresSafeArea())
+                .toolbar(.hidden, for: .navigationBar)
+                .sheet(isPresented: $showingCompose) {
+                    ComposeView()
+                }
+                .sheet(isPresented: $showingSearch) {
+                    SearchView(emails: MailSeed.emails, onOpen: { email in
+                        showingSearch = false
+                        selectedEmail = email
+                    })
+                }
+                .sheet(isPresented: $showingFolders) {
+                    MailboxesView(
+                        selectedFolder: $folder,
+                        selectedCategory: $selectedCategory,
+                        onDismiss: { showingFolders = false }
+                    )
+                    .presentationDetents([.large])
+                }
+                .navigationDestination(item: $selectedEmail) { email in
+                    DetailView(
+                        email: email,
+                        status: statuses[email.id] ?? EmailStatus(),
+                        onUpdate: { newStatus in statuses[email.id] = newStatus },
+                        onReply: { showingCompose = true }
+                    )
+                }
             }
-            .background(Color.black.ignoresSafeArea())
-            .preferredColorScheme(.dark)
-            .toolbar(.hidden, for: .navigationBar)
-            .sheet(isPresented: $showingCompose) {
-                ComposeView()
-            }
-            .sheet(isPresented: $showingSearch) {
-                SearchView(emails: MailSeed.emails, onOpen: { email in
-                    showingSearch = false
-                    selectedEmail = email
-                })
-            }
-            .sheet(isPresented: $showingFolders) {
-                MailboxesView(
-                    selectedFolder: $folder,
-                    selectedCategory: $selectedCategory,
-                    onDismiss: { showingFolders = false }
-                )
-                .presentationDetents([.large])
-            }
-            .navigationDestination(item: $selectedEmail) { email in
-                DetailView(
-                    email: email,
-                    status: statuses[email.id] ?? EmailStatus(),
-                    onUpdate: { newStatus in statuses[email.id] = newStatus },
-                    onReply: { showingCompose = true }
-                )
-            }
+            .frame(maxWidth: 430)
+            .frame(maxWidth: .infinity)
         }
+        .preferredColorScheme(.dark)
     }
 
     private func update(_ id: String, mutate: (inout EmailStatus) -> Void) {
